@@ -4,10 +4,17 @@ import { Server } from 'socket.io';
 export default function initSocket(app) {
 	const httpServer = createServer(app);
 	const io = new Server(httpServer, {
-		/* options */
+		cors: {
+			origin: 'http://localhost:3000',
+			methods: ['GET', 'POST']
+		}
 	});
 	io.on('connection', socket => {
-		console.log('A user connected');
+		console.log('A user connected', socket.id);
+		socket.on('ping', cb => {
+			console.log('ping');
+			cb();
+		});
 
 		//Whenever someone disconnects this piece of code executed
 		socket.on('disconnect', function () {
