@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { registerListener, registerRouters } from '@helpers';
+import { registerListener, registerRouters, initSocket } from '@helpers';
 import {
 	checkEnv,
 	registerRequestLogging,
@@ -25,6 +25,7 @@ export default function spinServer(PORT, HOST, worker) {
 	registerPreprocessor(app);
 	setupDocs(app);
 	registerRouters(app);
+	initSocket(app);
 	handleServerErrors(app);
 
 	return registerListener(app, PORT, HOST);
